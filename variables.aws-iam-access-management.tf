@@ -1,3 +1,12 @@
+variable "aws_ecr_repositories" {
+  description = "List of AWS Elastic Container Registry to create."
+  type = map(object({
+    name                 = optional(string, null)
+    image_tag_mutability = optional(string, "MUTABLE")
+    force_destroy        = optional(bool, false)
+  }))
+  default = {}
+}
 variable "aws_iam_policies" {
   description = "List of AWS IAM policies to create."
   type        = map(string)
@@ -50,17 +59,6 @@ variable "aws_iam_existing_users" {
   default = {}
 }
 
-variable "aws_secrets" {
-  description = "Secret to be stored in AWS Secrets Manager"
-  type = map(object({
-    region               = string
-    robotic_users_reader = list(string)
-    users_owner          = list(string)
-    secrets              = list(string)
-  }))
-  default = {}
-}
-
 variable "aws_iam_groups" {
   description = "List of AWS IAM groups to create."
   type = map(object({
@@ -97,13 +95,26 @@ variable "aws_iam_roles" {
   }))
   default = {}
 }
-
-variable "aws_ecr_repositories" {
-  description = "List of AWS Elastic Container Registry to create."
+variable "aws_route53_zone" {
+  description = "List of AWS route53 zone to create."
   type = map(object({
-    name                 = optional(string, null)
-    image_tag_mutability = optional(string, "MUTABLE")
-    force_destroy        = optional(bool, false)
+    domain  = string
+    comment = optional(string, "")
+    certificates = optional(map(object({
+      domain            = string
+      alternative_names = optional(list(string), [])
+    })), {})
+  }))
+  default = {}
+}
+variable "aws_secrets" {
+  description = "Secret to be stored in AWS Secrets Manager"
+  type = map(object({
+    region               = string
+    robotic_users_reader = list(string)
+    users_owner          = list(string)
+    secrets              = list(string)
+    resource_prefix      = optional(string, "aws_secret_")
   }))
   default = {}
 }

@@ -78,6 +78,15 @@ terraform workspace new <PUT_NAME>
 terraform init
 ```
 
+### Compute variables.aws-iam-access-management.tf
+
+```shell
+# if local module
+../terraform-aws-iam-access-management/variables.sh >variables.aws-iam-access-management.tf
+# if online
+./.terraform/modules/aws-iam-access-management/variables.sh >variables.aws-iam-access-management.tf
+```
+
 ### ./terraform.sh
 
 ./terraform.sh is a tiny wrapper around terraform to:

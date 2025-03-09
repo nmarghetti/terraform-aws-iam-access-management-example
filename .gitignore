@@ -2,4 +2,6 @@
 /.terraform.lock.hcl
 terraform.tfstate.backup
 /terraform.plan
+/terraform.tfstate.d
 /tmp
+/env.sh
